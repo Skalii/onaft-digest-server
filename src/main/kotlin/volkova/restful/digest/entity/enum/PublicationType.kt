@@ -2,12 +2,12 @@ package volkova.restful.digest.entity.enum
 
 import com.fasterxml.jackson.annotation.JsonValue
 
+
 import javax.persistence.AttributeConverter
 import javax.persistence.Converter
 
 
 enum class PublicationType(@get:JsonValue val value: String) {
-
 
     ARTICLE("Стаття");
 

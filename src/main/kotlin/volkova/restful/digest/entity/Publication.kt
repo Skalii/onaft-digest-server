@@ -1,22 +1,43 @@
 package volkova.restful.digest.entity
 
+
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import volkova.restful.digest.entity.enum.PublicationType
-import java.util.*
-import javax.persistence.*
+
+import java.util.Date
+
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Convert
+import javax.persistence.Entity
+import javax.persistence.FetchType
+import javax.persistence.ForeignKey
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.Index
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
+import javax.persistence.ManyToOne
+import javax.persistence.OneToOne
+import javax.persistence.SequenceGenerator
+import javax.persistence.Table
+
 import javax.validation.constraints.NotNull
 
+
 @Entity(name = "Publication")
-@JsonPropertyOrder(value = ["id_publication", "type", "title", "abstract", "date", "rating", "doi"])  // последователность
+@JsonPropertyOrder(
+        value = ["id_publication", "type", "title", "abstract", "date", "rating", "doi"])  // последователность
 @SequenceGenerator(
         name = "publications_seq",
         sequenceName = "publications_id_publication_seq",
         schema = "public",
-        allocationSize = 1
-)
+        allocationSize = 1)
 @Table(
         name = "publications",
         schema = "public",
@@ -34,6 +55,7 @@ import javax.validation.constraints.NotNull
                     columnList = "id_rating",
                     unique = true)])
 data class Publication(
+
         @Column(name = "id_publication",
                 nullable = false)
         @GeneratedValue(
@@ -76,6 +98,7 @@ data class Publication(
         val doi: String? = null
 
 ) {
+
     @JoinColumn(
             name = "id_rating",
             nullable = false,
@@ -97,7 +120,6 @@ data class Publication(
             targetEntity = Journal::class,
             fetch = FetchType.EAGER)
     var journal: Journal? = null
-
 
     @JoinTable(
             name = "publications_authors",
@@ -160,6 +182,5 @@ data class Publication(
         this.rating = rating
         this.journal = journal
     }
-
 
 }

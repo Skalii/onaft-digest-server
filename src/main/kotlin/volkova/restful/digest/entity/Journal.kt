@@ -1,10 +1,23 @@
 package volkova.restful.digest.entity
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import javax.persistence.*
+
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.Index
+import javax.persistence.OneToMany
+import javax.persistence.OrderBy
+import javax.persistence.SequenceGenerator
+import javax.persistence.Table
+
 import javax.validation.constraints.NotNull
+
 
 @Entity(name = "Journal")
 @JsonPropertyOrder(value = ["id_journal", "title"])  // последователность
@@ -12,8 +25,7 @@ import javax.validation.constraints.NotNull
         name = "journals_seq",
         sequenceName = "journals_id_journal_seq",
         schema = "public",
-        allocationSize = 1
-)
+        allocationSize = 1)
 @Table(
         name = "journals",
         schema = "public",
@@ -27,7 +39,8 @@ import javax.validation.constraints.NotNull
             Index(name = "journals_title_uindex",
                     columnList = "title",
                     unique = true)])
-class Journal(
+data class Journal(
+
         @Column(name = "id_journal",
                 nullable = false)
         @GeneratedValue(
@@ -43,6 +56,7 @@ class Journal(
         @get:JsonProperty(value = "title")
         @NotNull
         val title: String = ""
+
 ) {
 
     @JsonIgnoreProperties(value = ["journal"])

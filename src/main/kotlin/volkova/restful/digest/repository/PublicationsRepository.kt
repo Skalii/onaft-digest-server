@@ -1,11 +1,14 @@
 package volkova.restful.digest.repository
 
+
 import org.springframework.data.repository.Repository as MyRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import org.springframework.web.bind.annotation.CrossOrigin
+
 import volkova.restful.digest.entity.Publication
+
 
 @CrossOrigin
 @Repository

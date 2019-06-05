@@ -1,22 +1,35 @@
 package volkova.restful.digest.entity
 
-import com.fasterxml.jackson.annotation.JsonFormat
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import volkova.restful.digest.entity.enum.PublicationType
-import java.util.*
-import javax.persistence.*
+
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.ForeignKey
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.Index
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
+import javax.persistence.SequenceGenerator
+import javax.persistence.Table
+
 import javax.validation.constraints.NotNull
 
+
 @Entity(name = "Author")
-@JsonPropertyOrder(value = ["id_author", "first_name", "middle_name", "surname", "publications"])  // последователность
+@JsonPropertyOrder(
+        value = ["id_author", "first_name", "middle_name", "surname", "publications"])  // последователность
 @SequenceGenerator(
         name = "authors_seq",
         sequenceName = "authors_id_author_seq",
         schema = "public",
-        allocationSize = 1
-)
+        allocationSize = 1)
 @Table(
         name = "authors",
         schema = "public",
@@ -28,6 +41,7 @@ import javax.validation.constraints.NotNull
                     columnList = "id_author",
                     unique = true)])
 data class Author(
+
         @Column(name = "id_author",
                 nullable = false)
         @GeneratedValue(
@@ -55,6 +69,7 @@ data class Author(
         val surname: String = ""
 
 ) {
+
     @JoinTable(
             name = "publications_authors",
             joinColumns = [JoinColumn(

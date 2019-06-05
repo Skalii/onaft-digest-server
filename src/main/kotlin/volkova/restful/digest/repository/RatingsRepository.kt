@@ -1,18 +1,20 @@
 package volkova.restful.digest.repository
 
+
 import org.springframework.data.repository.Repository as MyRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+
 import volkova.restful.digest.entity.Rating
 
 
 @Repository
-interface RatingsRepository: MyRepository<Rating, Int> {
+interface RatingsRepository : MyRepository<Rating, Int> {
 
     @Query(value = """select (rating_record(cast_int(:id_rating))).*""",
             nativeQuery = true)
-    fun findSome(@Param("id_rating") idRating: Int? = null): MutableList<Rating>
+    fun find(@Param("id_rating") idRating: Int? = null): Rating
 
     @Query(value = """select (keyword_record(all_record => true)).*""",
             nativeQuery = true)

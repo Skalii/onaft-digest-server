@@ -1,10 +1,26 @@
 package volkova.restful.digest.entity
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import javax.persistence.*
+
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.ForeignKey
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.Index
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
+import javax.persistence.SequenceGenerator
+import javax.persistence.Table
+
 import javax.validation.constraints.NotNull
+
 
 @Entity(name = "Keyword")
 @JsonPropertyOrder(value = ["id_keyword", "word"])  // последователность
@@ -12,8 +28,7 @@ import javax.validation.constraints.NotNull
         name = "keywords_seq",
         sequenceName = "keywords_id_keyword_seq",
         schema = "public",
-        allocationSize = 1
-)
+        allocationSize = 1)
 @Table(
         name = "keywords",
         schema = "public",
@@ -27,23 +42,25 @@ import javax.validation.constraints.NotNull
             Index(name = "keywords_word_uindex",
                     columnList = "word",
                     unique = true)])
-class Keyword (
-    @Column(name = "id_keyword",
-            nullable = false)
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "keywords_seq")
-    @Id
-    @get:JsonProperty(value = "id_keyword") // как именуюется
-    @NotNull
-    val idKeyword: Int = 0,
+class Keyword(
 
-    @Column(name = "word",
-            nullable = false)
-    @get:JsonProperty(value = "word")
-    @NotNull
-    val word: String = ""
-){
+        @Column(name = "id_keyword",
+                nullable = false)
+        @GeneratedValue(
+                strategy = GenerationType.SEQUENCE,
+                generator = "keywords_seq")
+        @Id
+        @get:JsonProperty(value = "id_keyword") // как именуюется
+        @NotNull
+        val idKeyword: Int = 0,
+
+        @Column(name = "word",
+                nullable = false)
+        @get:JsonProperty(value = "word")
+        @NotNull
+        val word: String = ""
+
+) {
 
     @JoinTable(
             name = "publications_keywords",
@@ -64,6 +81,5 @@ class Keyword (
             0,
             ""
     )
-
 
 }

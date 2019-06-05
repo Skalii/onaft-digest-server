@@ -1,23 +1,26 @@
 package volkova.restful.digest.repository
 
+
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.data.repository.Repository as MyRepository
 import org.springframework.stereotype.Repository
+
 import volkova.restful.digest.entity.Keyword
 
+
 @Repository
-interface KeywordsRepository : MyRepository<Keyword, Int>{
+interface KeywordsRepository : MyRepository<Keyword, Int> {
 
     @Query(value = """select (keyword_record(
                           cast_int(:id_keyword),
                           cast_text(:word)
                       )).*""",
             nativeQuery = true)
-    fun findSome(
+    fun find(
             @Param("id_keyword") idKeyword: Int? = null,
             @Param("word") word: String? = null
-    ): MutableList<Keyword>
+    ): Keyword
 
     @Query(value = """select (keyword_record(all_record => true)).*""",
             nativeQuery = true)

@@ -1,42 +1,43 @@
-/*/*
-package volkova.restful.digest.service
+package volkova.restful.digest.service.impl
+
+
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpMethod
+import org.springframework.stereotype.Service
 
 import volkova.restful.digest.entity.Rating
+import volkova.restful.digest.repository.RatingsRepository
+import volkova.restful.digest.service.RatingsService
 
-interface RatingsService {
 
-    fun get(idRating: Int): Rating
+@Service
+class RatingsServiceImpl : RatingsService {
 
-    fun getAll(): MutableList<Rating>
+    @Autowired
+    private lateinit var ratingsRepository: RatingsRepository
 
-    fun save(
-//            httpMethod: HttpMethod,
+    override fun get(idRating: Int?) = ratingsRepository.find(idRating)
+
+    override fun getAll() = ratingsRepository.findAll()
+
+    override fun save(
+            httpMethod: HttpMethod,
             newRating: Rating
-    ): Rating
+    ) =
+            ratingsRepository.run {
+                when {
+                    httpMethod.matches("POST") -> {
+                        add(newRating)
+                    }
+                    httpMethod.matches("PUT") -> {
+                        set(newRating)
+                    }
+                    else -> {
+                        find()
+                    }
+                }
+            }
 
-    fun delete(idRating: Int): Unit */
-/*Rating*//*
+    override fun delete(idRating: Int) = ratingsRepository.remove(idRating)
 
-
-}*/
-
-package volkova.restful.digest.service
-
-import volkova.restful.digest.entity.Rating
-
-interface RatingsService {
-
-    fun get(idRating: Int): Rating
-
-    fun getAll(): MutableList<Rating>
-
-    fun save(
-//            httpMethod: HttpMethod,
-            newRating: Rating
-    ): Rating
-
-    fun delete(idRating: Int): Unit */
-/*Rating*//*
-
-
-}*/
+}

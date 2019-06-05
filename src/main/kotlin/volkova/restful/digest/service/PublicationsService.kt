@@ -1,7 +1,10 @@
 package volkova.restful.digest.service
 
+
 import org.springframework.http.HttpMethod
+
 import volkova.restful.digest.entity.Publication
+
 
 interface PublicationsService {
 
