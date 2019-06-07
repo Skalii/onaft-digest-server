@@ -17,20 +17,16 @@ class PublicationsServiceImpl : PublicationsService {
     private lateinit var publicationsRepository: PublicationsRepository
 
     override fun get(
-            idPublication: Int?,
-            type: String?,
-            abstract: String?,
+            title: String?,
             date: String?,
-            doi: String?,
-            title: String?
+            keywords: String?,
+            authors: String?
     ) =
             publicationsRepository.findSome(
-                    idPublication,
-                    type,
-                    abstract,
+                    title,
                     date,
-                    doi,
-                    title
+                    keywords,
+                    authors
             )
 
     override fun getAll(): MutableList<Publication> = publicationsRepository.findAll()

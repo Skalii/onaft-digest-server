@@ -41,27 +41,39 @@ class PublicationsRestController {
     private lateinit var keywordsService: KeywordsService
 
 
-    @PostMapping(value = ["some"])
+    @GetMapping(value = ["some"])
     fun getSome(
-            @RequestParam(
-                    value = "date",
-                    required = false) date: String? = null,
             @RequestParam(
                     value = "title",
                     required = false) title: String? = null,
             @RequestParam(
-                    value = "title_journal",
-                    required = false) titleJournal: String? = null,
-            @RequestParam(
-                    value = "keywords",
-                    required = false) keywords: Array<String>? = null,
+                    value = "date",
+                    required = false) date: String? = null,
             @RequestParam(
                     value = "authors",
-                    required = false) authors: Array<String>? = null
+                    required = false) authors: String? = null,
+            @RequestParam(
+                    value = "keywords",
+                    required = false) keywords: String? = null
     ) =
             publicationsService.run {
 
-                //todo
+                println()
+                println(title)
+                println()
+                println(date)
+                println()
+                println(keywords)
+                println()
+                println(authors)
+                println()
+
+                get(
+                        title,
+                        date,
+                        keywords,
+                        authors
+                )
 
             }
 

@@ -14,22 +14,18 @@ import volkova.restful.digest.entity.Publication
 @Repository
 interface PublicationsRepository : MyRepository<Publication, Int> {
 
-    @Query(value = """select (publication_record(
-                          cast_int(:id_publication),
-                          cast_type(:type),
-                          cast_text(:abstract),
-                          cast(:date as date),
-                          cast_text(:doi),
-                          cast_text(:title)
+    @Query(value = """select (publication_records(
+                          cast_text(:title),
+                          cast_date(:date),
+                          cast_text(:authors),
+                          cast_text(:keywords)
                       )).*""",
             nativeQuery = true)
     fun findSome(
-            @Param("id_publication") idPublication: Int? = null,
-            @Param("type") type: String? = null,
-            @Param("abstract") abstract: String? = null,
+            @Param("title") title: String? = null,
             @Param("date") date: String? = null,
-            @Param("doi") doi: String? = null,
-            @Param("title") title: String? = null
+            @Param("keywords") keywords: String? = null,
+            @Param("authors") authors: String? = null
     ): MutableList<Publication>
 
     @Query(value = """select (publication_record(all_record => true)).*""",

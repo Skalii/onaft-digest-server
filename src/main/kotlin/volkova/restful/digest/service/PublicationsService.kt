@@ -10,12 +10,10 @@ interface PublicationsService {
 
 
     fun get(
-            idPublication: Int? = null,
-            type: String? = null,
-            abstract: String? = null,
+            title: String? = null,
             date: String? = null,
-            doi: String? = null,
-            title: String? = null
+            keywords: String? = null,
+            authors: String? = null
     ): MutableList<Publication>
 
     fun getAll(): MutableList<Publication>
