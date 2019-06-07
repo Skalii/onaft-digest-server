@@ -56,26 +56,13 @@ class PublicationsRestController {
                     value = "keywords",
                     required = false) keywords: String? = null
     ) =
-            publicationsService.run {
+            publicationsService.get(
+                    title,
+                    date,
+                    keywords,
+                    authors
+            )   //todo 4.6.1 процес отримання статей результатів пошук
 
-                println()
-                println(title)
-                println()
-                println(date)
-                println()
-                println(keywords)
-                println()
-                println(authors)
-                println()
-
-                get(
-                        title,
-                        date,
-                        keywords,
-                        authors
-                )
-
-            }
 
     @GetMapping(value = ["all"])
     fun getAll(

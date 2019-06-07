@@ -16,7 +16,7 @@ interface PublicationsRepository : MyRepository<Publication, Int> {
 
     @Query(value = """select (publication_records(
                           cast_text(:title),
-                          cast_date(:date),
+                          cast_text(:date),
                           cast_text(:authors),
                           cast_text(:keywords)
                       )).*""",
@@ -26,7 +26,7 @@ interface PublicationsRepository : MyRepository<Publication, Int> {
             @Param("date") date: String? = null,
             @Param("keywords") keywords: String? = null,
             @Param("authors") authors: String? = null
-    ): MutableList<Publication>
+    ): MutableList<Publication> //todo 4.6.1 процес отримання статей результатів пошук
 
     @Query(value = """select (publication_record(all_record => true)).*""",
             nativeQuery = true)
