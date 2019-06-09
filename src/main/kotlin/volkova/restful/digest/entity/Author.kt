@@ -60,6 +60,7 @@ data class Author(
 
         @Column(name = "middle_name")
         @get:JsonProperty(value = "middle_name")
+        @NotNull
         val middleName: String = "",
 
         @Column(name = "surname",
