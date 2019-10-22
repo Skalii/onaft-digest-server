@@ -1,9 +1,9 @@
 package volkova.restful.digest.repository
 
 
-import org.springframework.data.repository.Repository as MyRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
+import org.springframework.data.repository.Repository as EmptyRepository
 import org.springframework.stereotype.Repository
 import org.springframework.web.bind.annotation.CrossOrigin
 
@@ -12,21 +12,21 @@ import volkova.restful.digest.entity.Publication
 
 @CrossOrigin
 @Repository
-interface PublicationsRepository : MyRepository<Publication, Int> {
+interface PublicationsRepository : EmptyRepository<Publication, Int> {
 
-    @Query(value = """select (publication_records(
+    @Query(value = """select (publication_search(
                           cast_text(:title),
                           cast_text(:date),
                           cast_text(:authors),
                           cast_text(:keywords)
                       )).*""",
             nativeQuery = true)
-    fun findSome(
+    fun findSearch(
             @Param("title") title: String? = null,
             @Param("date") date: String? = null,
             @Param("keywords") keywords: String? = null,
             @Param("authors") authors: String? = null
-    ): MutableList<Publication> //todo 4.6.1 процес отримання статей результатів пошук
+    ): MutableList<Publication>
 
     @Query(value = """select (publication_record(all_record => true)).*""",
             nativeQuery = true)
@@ -38,8 +38,8 @@ interface PublicationsRepository : MyRepository<Publication, Int> {
                           cast(:#{#publication.date.toString()} as date),
                           cast_text(:#{#publication.doi}),
                           cast_text(:#{#publication.title}),
-                          cast_dp(:#{#publication.rating.stars}),
-                          cast_int(:#{#publication.rating.seen})
+                          cast_int(:#{#publication.rating.idRating}),
+                          cast_int(:#{#publication.journal.idJournal})
                       )).*""",
             nativeQuery = true)
     fun add(@Param("publication") newPublication: Publication): Publication

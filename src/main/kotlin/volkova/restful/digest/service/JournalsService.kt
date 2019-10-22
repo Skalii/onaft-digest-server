@@ -10,7 +10,8 @@ interface JournalsService {
 
     fun get(
             idJournal: Int? = null,
-            title: String? = null
+            title: String? = null,
+            titleEn: String? = null
     ): MutableList<Journal>
 
     fun getAll(): MutableList<Journal>

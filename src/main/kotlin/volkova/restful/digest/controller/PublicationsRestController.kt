@@ -7,7 +7,6 @@ import org.springframework.http.MediaType
 
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -41,8 +40,8 @@ class PublicationsRestController {
     private lateinit var keywordsService: KeywordsService
 
 
-    @GetMapping(value = ["some"])
-    fun getSome(
+    @GetMapping(value = ["search"])
+    fun getSearch(
             @RequestParam(
                     value = "title",
                     required = false) title: String? = null,
@@ -56,12 +55,12 @@ class PublicationsRestController {
                     value = "keywords",
                     required = false) keywords: String? = null
     ) =
-            publicationsService.get(
+            publicationsService.getSearch(
                     title,
                     date,
                     keywords,
                     authors
-            )   //todo 4.6.1 процес отримання статей результатів пошук
+            )
 
 
     @GetMapping(value = ["all"])
@@ -75,7 +74,7 @@ class PublicationsRestController {
                     "journals" -> journalsService.getAll()
                     "authors" -> authorsService.getAll()
                     "keywords" -> keywordsService.getAll()
-                    else -> publicationsService.get()
+                    else -> publicationsService.getAll()
                 }
             } else {
                 publicationsService.getAll()

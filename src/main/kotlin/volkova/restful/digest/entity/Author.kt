@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull
 
 @Entity(name = "Author")
 @JsonPropertyOrder(
-        value = ["id_author", "first_name", "middle_name", "surname", "publications"])  // последователность
+        value = ["id_author", "full_name", "publications"])
 @SequenceGenerator(
         name = "authors_seq",
         sequenceName = "authors_id_author_seq",
@@ -39,6 +39,9 @@ import javax.validation.constraints.NotNull
                     unique = true),
             Index(name = "authors_id_author_uindex",
                     columnList = "id_author",
+                    unique = true),
+            Index(name = "authors_full_name_uindex",
+                    columnList = "full_name",
                     unique = true)])
 data class Author(
 
@@ -48,26 +51,15 @@ data class Author(
                 strategy = GenerationType.SEQUENCE,
                 generator = "authors_seq")
         @Id
-        @get:JsonProperty(value = "id_author") // как именуюется
+        @get:JsonProperty(value = "id_author")
         @NotNull
         val idAuthor: Int = 0,
 
-        @Column(name = "first_name",
+        @Column(name = "full_name",
                 nullable = false)
-        @get:JsonProperty(value = "first_name")
+        @get:JsonProperty(value = "full_name")
         @NotNull
-        val firstName: String = "",
-
-        @Column(name = "middle_name")
-        @get:JsonProperty(value = "middle_name")
-        @NotNull
-        val middleName: String = "",
-
-        @Column(name = "surname",
-                nullable = false)
-        @get:JsonProperty(value = "surname")
-        @NotNull
-        val surname: String = ""
+        val fullName: String = ""
 
 ) {
 
@@ -76,11 +68,11 @@ data class Author(
             joinColumns = [JoinColumn(
                     name = "id_author",
                     nullable = false,
-                    foreignKey = ForeignKey(name = "publications_authors_id_author_fk"))],
+                    foreignKey = ForeignKey(name = "publications_authors_id_author_fkey"))],
             inverseJoinColumns = [JoinColumn(
                     name = "id_publication",
                     nullable = false,
-                    foreignKey = ForeignKey(name = "publications_publications_id_publication_fk"))])
+                    foreignKey = ForeignKey(name = "publications_publications_id_publication_fkey"))])
     @JsonIgnoreProperties(value = ["author"])
     @get:JsonProperty(value = "publications")
     @ManyToMany(cascade = [CascadeType.ALL])
@@ -88,9 +80,6 @@ data class Author(
 
     constructor() : this(
             0,
-            "",
-            "",
             ""
     )
 }
-

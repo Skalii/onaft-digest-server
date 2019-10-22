@@ -18,11 +18,13 @@ class JournalsServiceImpl : JournalsService {
 
     override fun get(
             idJournal: Int?,
-            title: String?
+            title: String?,
+            titleEn: String?
     ) =
             journalsRepository.findSome(
                     idJournal,
-                    title
+                    title,
+                    titleEn
             )
 
     override fun getAll() = journalsRepository.findAll()

@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull
 
 
 @Entity(name = "Keyword")
-@JsonPropertyOrder(value = ["id_keyword", "word"])  // последователность
+@JsonPropertyOrder(value = ["id_keyword", "word", "publications"])
 @SequenceGenerator(
         name = "keywords_seq",
         sequenceName = "keywords_id_keyword_seq",
@@ -42,7 +42,7 @@ import javax.validation.constraints.NotNull
             Index(name = "keywords_word_uindex",
                     columnList = "word",
                     unique = true)])
-class Keyword(
+data class Keyword(
 
         @Column(name = "id_keyword",
                 nullable = false)
@@ -50,7 +50,7 @@ class Keyword(
                 strategy = GenerationType.SEQUENCE,
                 generator = "keywords_seq")
         @Id
-        @get:JsonProperty(value = "id_keyword") // как именуюется
+        @get:JsonProperty(value = "id_keyword")
         @NotNull
         val idKeyword: Int = 0,
 
@@ -67,11 +67,11 @@ class Keyword(
             joinColumns = [JoinColumn(
                     name = "id_keyword",
                     nullable = false,
-                    foreignKey = ForeignKey(name = "publications_keywords_id_keyword_fk"))],
+                    foreignKey = ForeignKey(name = "publications_keywords_id_keyword_fkey"))],
             inverseJoinColumns = [JoinColumn(
                     name = "id_publication",
                     nullable = false,
-                    foreignKey = ForeignKey(name = "publications_keywords_id_publication_fk"))])
+                    foreignKey = ForeignKey(name = "publications_keywords_id_publication_fkey"))])
     @JsonIgnoreProperties(value = ["keyword"])
     @get:JsonProperty(value = "publications")
     @ManyToMany(cascade = [CascadeType.ALL])

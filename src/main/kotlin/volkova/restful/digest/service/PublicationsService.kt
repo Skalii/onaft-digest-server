@@ -9,7 +9,7 @@ import volkova.restful.digest.entity.Publication
 interface PublicationsService {
 
 
-    fun get(
+    fun getSearch(
             title: String? = null,
             date: String? = null,
             keywords: String? = null,

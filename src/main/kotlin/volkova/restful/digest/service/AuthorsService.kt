@@ -10,9 +10,7 @@ interface AuthorsService {
 
     fun get(
             idAuthor: Int? = null,
-            firstName: String? = null,
-            middleName: String? = null,
-            surname: String? = null
+            fullName: String? = null
     ): MutableList<Author>
 
     fun getAll(): MutableList<Author>

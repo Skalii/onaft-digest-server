@@ -16,13 +16,13 @@ class PublicationsServiceImpl : PublicationsService {
     @Autowired
     private lateinit var publicationsRepository: PublicationsRepository
 
-    override fun get(
+    override fun getSearch(
             title: String?,
             date: String?,
             keywords: String?,
             authors: String?
     ) =
-            publicationsRepository.findSome(
+            publicationsRepository.findSearch(
                     title,
                     date,
                     keywords,
@@ -44,7 +44,7 @@ class PublicationsServiceImpl : PublicationsService {
                         set(newPublication)
                     }
                     else -> {
-                        findSome()[0]
+                        findSearch()[0]
                     }
                 }
             }

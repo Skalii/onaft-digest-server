@@ -18,15 +18,11 @@ class AuthorsServiceImpl : AuthorsService {
 
     override fun get(
             idAuthor: Int?,
-            firstName: String?,
-            middleName: String?,
-            surname: String?
+            fullName: String?
     ) =
             authorsRepository.findSome(
                     idAuthor,
-                    firstName,
-                    middleName,
-                    surname
+                    fullName
             )
 
     override fun getAll(): MutableList<Author> = authorsRepository.findAll()

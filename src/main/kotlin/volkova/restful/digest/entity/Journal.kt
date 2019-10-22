@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull
 
 
 @Entity(name = "Journal")
-@JsonPropertyOrder(value = ["id_journal", "title"])  // последователность
+@JsonPropertyOrder(value = ["id_journal", "title", "title_en", "publications"])
 @SequenceGenerator(
         name = "journals_seq",
         sequenceName = "journals_id_journal_seq",
@@ -38,6 +38,9 @@ import javax.validation.constraints.NotNull
                     unique = true),
             Index(name = "journals_title_uindex",
                     columnList = "title",
+                    unique = true),
+            Index(name = "journals_title_en_uindex",
+                    columnList = "title_en",
                     unique = true)])
 data class Journal(
 
@@ -47,7 +50,7 @@ data class Journal(
                 strategy = GenerationType.SEQUENCE,
                 generator = "journals_seq")
         @Id
-        @get:JsonProperty(value = "id_journal") // как именуюется
+        @get:JsonProperty(value = "id_journal")
         @NotNull
         val idJournal: Int = 0,
 
@@ -55,7 +58,13 @@ data class Journal(
                 nullable = false)
         @get:JsonProperty(value = "title")
         @NotNull
-        val title: String = ""
+        val title: String = "",
+
+        @Column(name = "title_en",
+                nullable = false)
+        @get:JsonProperty(value = "title_en")
+        @NotNull
+        val titleEn: String = ""
 
 ) {
 
@@ -69,6 +78,7 @@ data class Journal(
 
     constructor() : this(
             0,
+            "",
             ""
     )
 

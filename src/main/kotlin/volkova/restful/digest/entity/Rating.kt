@@ -15,12 +15,11 @@ import javax.persistence.Index
 import javax.persistence.OneToOne
 import javax.persistence.SequenceGenerator
 import javax.persistence.Table
-
 import javax.validation.constraints.NotNull
 
 
 @Entity(name = "Rating")
-@JsonPropertyOrder(value = ["id_rating", "stars", "seen"])  // последователность
+@JsonPropertyOrder(value = ["id_rating", "stars", "seen", "publication"])
 @SequenceGenerator(
         name = "ratings_seq",
         sequenceName = "ratings_id_rating_seq",
@@ -45,7 +44,7 @@ data class Rating(
                 strategy = GenerationType.SEQUENCE,
                 generator = "ratings_seq")
         @Id
-        @get:JsonProperty(value = "id_rating") // как именуюется
+        @get:JsonProperty(value = "id_rating")
         @NotNull
         val idKeyword: Int = 0,
 
@@ -84,7 +83,6 @@ data class Rating(
             stars: Double = 0.0,
             seen: Int = 0,
             publication: Publication = Publication()
-
     ) : this(
             idKeyword,
             stars,

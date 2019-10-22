@@ -3,14 +3,14 @@ package volkova.restful.digest.repository
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
-import org.springframework.data.repository.Repository as MyRepository
+import org.springframework.data.repository.Repository as EmptyRepository
 import org.springframework.stereotype.Repository
 
 import volkova.restful.digest.entity.Keyword
 
 
 @Repository
-interface KeywordsRepository : MyRepository<Keyword, Int> {
+interface KeywordsRepository : EmptyRepository<Keyword, Int> {
 
     @Query(value = """select (keyword_record(
                           cast_int(:id_keyword),

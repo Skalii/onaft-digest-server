@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import volkova.restful.digest.entity.enum.PublicationType
 
 import java.util.Date
 
@@ -26,13 +25,15 @@ import javax.persistence.ManyToOne
 import javax.persistence.OneToOne
 import javax.persistence.SequenceGenerator
 import javax.persistence.Table
-
 import javax.validation.constraints.NotNull
+
+import volkova.restful.digest.entity.enum.PublicationType
 
 
 @Entity(name = "Publication")
 @JsonPropertyOrder(
-        value = ["id_publication", "type", "title", "abstract", "date", "rating", "doi"])  // последователность
+        value = ["id_publication", "type", "title", "abstract",
+            "date", "doi", "rating", "journal", "authors", "keywords"])
 @SequenceGenerator(
         name = "publications_seq",
         sequenceName = "publications_id_publication_seq",
@@ -62,13 +63,13 @@ data class Publication(
                 strategy = GenerationType.SEQUENCE,
                 generator = "publications_seq")
         @Id
-        @get:JsonProperty(value = "id_publication") // как именуюется
+        @get:JsonProperty(value = "id_publication")
         @NotNull
         val idPublication: Int = 0,
 
         @Column(name = "type",
                 nullable = false)
-        @Convert(converter = PublicationType.Companion.EnumConverter::class) // converter enum
+        @Convert(converter = PublicationType.Companion.EnumConverter::class)
         @get:JsonProperty(value = "type")
         @NotNull
         val type: PublicationType = PublicationType.ARTICLE,
@@ -79,10 +80,8 @@ data class Publication(
         @NotNull
         val title: String = "",
 
-        @Column(name = "abstract",
-                nullable = false)
+        @Column(name = "abstract")
         @get:JsonProperty(value = "abstract")
-        @NotNull
         val abstract: String = "",
 
         @Column(name = "date")
@@ -102,7 +101,7 @@ data class Publication(
     @JoinColumn(
             name = "id_rating",
             nullable = false,
-            foreignKey = ForeignKey(name = "publications_ratings_id_rating_fk"))
+            foreignKey = ForeignKey(name = "publications_ratings_id_rating_fkey"))
     @JsonIgnoreProperties(value = ["publication"])
     @get:JsonProperty(value = "rating")
     @OneToOne(
@@ -113,7 +112,7 @@ data class Publication(
 
     @JoinColumn(
             name = "id_journal",
-            foreignKey = ForeignKey(name = "publications_journals_id_journal_fk"))
+            foreignKey = ForeignKey(name = "publications_journals_id_journal_fkey"))
     @JsonIgnoreProperties(value = ["publications"])
     @get:JsonProperty(value = "journal")
     @ManyToOne(
@@ -126,11 +125,11 @@ data class Publication(
             joinColumns = [JoinColumn(
                     name = "id_publication",
                     nullable = false,
-                    foreignKey = ForeignKey(name = "publications_publications_id_publication_fk"))],
+                    foreignKey = ForeignKey(name = "publications_authors_id_publication_fkey"))],
             inverseJoinColumns = [JoinColumn(
                     name = "id_author",
                     nullable = false,
-                    foreignKey = ForeignKey(name = "publications_authors_id_author_fk"))])
+                    foreignKey = ForeignKey(name = "publications_authors_id_author_fkey"))])
     @JsonIgnoreProperties(value = ["publications"])
     @get:JsonProperty(value = "authors")
     @ManyToMany(cascade = [CascadeType.ALL])
@@ -141,11 +140,11 @@ data class Publication(
             joinColumns = [JoinColumn(
                     name = "id_publication",
                     nullable = false,
-                    foreignKey = ForeignKey(name = "publications_keywords_id_publication_fk"))],
+                    foreignKey = ForeignKey(name = "publications_keywords_id_publication_fkey"))],
             inverseJoinColumns = [JoinColumn(
                     name = "id_keyword",
                     nullable = false,
-                    foreignKey = ForeignKey(name = "publications_keywords_id_keyword_fk"))])
+                    foreignKey = ForeignKey(name = "publications_keywords_id_keyword_fkey"))])
     @JsonIgnoreProperties(value = ["publications"])
     @get:JsonProperty(value = "keywords")
     @ManyToMany(cascade = [CascadeType.ALL])
@@ -163,8 +162,8 @@ data class Publication(
 
     constructor(
             idPublication: Int = 0,
-            title: String = "",
             type: PublicationType = PublicationType.ARTICLE,
+            title: String = "",
             abstract: String = "",
             date: Date? = null,
             doi: String? = null,
