@@ -2,3 +2,5 @@
 //todo keywords can be null for search - default (need check)
 
 //todo add type of publications in database and server
+
+//todo swap arguments title <> type in functions for publications

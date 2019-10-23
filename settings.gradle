@@ -3,4 +3,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'digest'
+rootProject.name = 'onaft-digest-server'
